@@ -33,6 +33,6 @@ public class Product {
     }
 
     public String getServiceAddress() {
-        return serviceAddress;
+        return serviceAddress + "$$$$-----";
     }
 }

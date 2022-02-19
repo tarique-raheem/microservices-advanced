@@ -34,7 +34,7 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
 
         List<Review> reviews = integration.getReviews(productId);
 
-        return createProductAggregate(product, recommendations, reviews, serviceUtil.getServiceAddress()+"$$$$");
+        return createProductAggregate(product, recommendations, reviews, "********"+serviceUtil.getServiceAddress());
     }
 
     private ProductAggregate createProductAggregate(Product product, List<Recommendation> recommendations, List<Review> reviews, String serviceAddress) {
