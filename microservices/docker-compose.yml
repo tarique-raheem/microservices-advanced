@@ -57,6 +57,9 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
       - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+    depends_on:
+      config-server:
+        condition: service_healthy
     build: eureka-server
     mem_limit: 350m
 
@@ -65,6 +68,9 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
       - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+    depends_on:
+      config-server:
+        condition: service_healthy
     build: gateway
     mem_limit: 350m
     ports:
