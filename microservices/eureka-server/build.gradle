@@ -4,6 +4,8 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'java'
+apply plugin: 'eclipse'
 
 group = 'se.magnus.springcloud'
 version = '1.0.0-SNAPSHOT'
@@ -19,6 +21,7 @@ ext {
 
 dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.glassfish.jaxb:jaxb-runtime'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
