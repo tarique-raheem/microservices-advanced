@@ -88,7 +88,7 @@ services:
       eureka:
         condition: service_started
   auth-server:
-    build:authorization-server
+    build: authorization-server
     mem_limit: 350m
     networks:
       - my-network
