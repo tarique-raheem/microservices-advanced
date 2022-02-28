@@ -1,0 +1,305 @@
+{
+	"info": {
+		"_postman_id": "ba38a69c-5389-468c-abeb-5bda0ac710b7",
+		"name": "Microservices_Book",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST product composite",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"productId\": 1,\r\n  \"name\": \"product name C\",\r\n  \"weight\": 300,\r\n  \"recommendations\": [\r\n    {\r\n      \"recommendationId\": 1,\r\n      \"author\": \"author 1\",\r\n      \"rate\": 1,\r\n      \"content\": \"content 1\"\r\n    },\r\n    {\r\n      \"recommendationId\": 2,\r\n      \"author\": \"author 2\",\r\n      \"rate\": 2,\r\n      \"content\": \"content 2\"\r\n    },\r\n    {\r\n      \"recommendationId\": 3,\r\n      \"author\": \"author 3\",\r\n      \"rate\": 3,\r\n      \"content\": \"content 3\"\r\n    }\r\n  ],\r\n  \"reviews\": [\r\n    {\r\n      \"reviewId\": 1,\r\n      \"author\": \"author 1\",\r\n      \"subject\": \"subject 1\",\r\n      \"content\": \"content 1\"\r\n    },\r\n    {\r\n      \"reviewId\": 2,\r\n      \"author\": \"author 2\",\r\n      \"subject\": \"subject 2\",\r\n      \"content\": \"content 2\"\r\n    },\r\n    {\r\n      \"reviewId\": 3,\r\n      \"author\": \"author 3\",\r\n      \"subject\": \"subject 3\",\r\n      \"content\": \"content 3\"\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/product-composite",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product-composite"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET product-composite",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"productId\": 1,\r\n  \"name\": \"product name C\",\r\n  \"weight\": 300,\r\n  \"recommendations\": [\r\n    {\r\n      \"recommendationId\": 1,\r\n      \"author\": \"author 1\",\r\n      \"rate\": 1,\r\n      \"content\": \"content 1\"\r\n    },\r\n    {\r\n      \"recommendationId\": 2,\r\n      \"author\": \"author 2\",\r\n      \"rate\": 2,\r\n      \"content\": \"content 2\"\r\n    },\r\n    {\r\n      \"recommendationId\": 3,\r\n      \"author\": \"author 3\",\r\n      \"rate\": 3,\r\n      \"content\": \"content 3\"\r\n    }\r\n  ],\r\n  \"reviews\": [\r\n    {\r\n      \"reviewId\": 1,\r\n      \"author\": \"author 1\",\r\n      \"subject\": \"subject 1\",\r\n      \"content\": \"content 1\"\r\n    },\r\n    {\r\n      \"reviewId\": 2,\r\n      \"author\": \"author 2\",\r\n      \"subject\": \"subject 2\",\r\n      \"content\": \"content 2\"\r\n    },\r\n    {\r\n      \"reviewId\": 3,\r\n      \"author\": \"author 3\",\r\n      \"subject\": \"subject 3\",\r\n      \"content\": \"content 3\"\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/product-composite/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product-composite",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST https product composite",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtYWdudXMiLCJleHAiOjIyNDYwMTEyNzEsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiJpY3FDS3RwaXZDdEdlZDZQQmdJT3pYS25oMzQ9IiwiY2xpZW50X2lkIjoid3JpdGVyIiwic2NvcGUiOlsicHJvZHVjdDpyZWFkIiwicHJvZHVjdDp3cml0ZSJdfQ.SRbSSh_3OVXs-hHLVXgxflOOlLvt3s3n-9j4jnZWPKT_mSXcxKStxzh7wHHI-k1tV2buTF_FmfnnyX2TCxfmCBC3p3pPhJPWlfgUMa51pePSWeAbvNdXs-IPvJ6j_t55bhYHNXaCIhAVIniAbpWHFAQ7SmKLl4_paNOGCTXhcAzFVSjEz6vijQHxAc7hobCnEqVJXQoJMMrzswmsLoE2PKlFF8u-oTEki2_7DTvraOSsPGtAzdvMQr7R-sI0_qgG9QjW10GjKMqaSFQULSCYGYWV254r8sjQYCZ3CefOVAGzJWvvw1DsiXKBteDaDNupezGNm36TV6rf6FGBErCPMw",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"productId\": 1,\r\n  \"name\": \"product name C\",\r\n  \"weight\": 300,\r\n  \"recommendations\": [\r\n    {\r\n      \"recommendationId\": 1,\r\n      \"author\": \"author 1\",\r\n      \"rate\": 1,\r\n      \"content\": \"content 1\"\r\n    },\r\n    {\r\n      \"recommendationId\": 2,\r\n      \"author\": \"author 2\",\r\n      \"rate\": 2,\r\n      \"content\": \"content 2\"\r\n    },\r\n    {\r\n      \"recommendationId\": 3,\r\n      \"author\": \"author 3\",\r\n      \"rate\": 3,\r\n      \"content\": \"content 3\"\r\n    }\r\n  ],\r\n  \"reviews\": [\r\n    {\r\n      \"reviewId\": 1,\r\n      \"author\": \"author 1\",\r\n      \"subject\": \"subject 1\",\r\n      \"content\": \"content 1\"\r\n    },\r\n    {\r\n      \"reviewId\": 2,\r\n      \"author\": \"author 2\",\r\n      \"subject\": \"subject 2\",\r\n      \"content\": \"content 2\"\r\n    },\r\n    {\r\n      \"reviewId\": 3,\r\n      \"author\": \"author 3\",\r\n      \"subject\": \"subject 3\",\r\n      \"content\": \"content 3\"\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/product-composite",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"product-composite"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET https product-composite",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtYWdudXMiLCJleHAiOjIyNDYwMTEyNzEsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiJpY3FDS3RwaXZDdEdlZDZQQmdJT3pYS25oMzQ9IiwiY2xpZW50X2lkIjoid3JpdGVyIiwic2NvcGUiOlsicHJvZHVjdDpyZWFkIiwicHJvZHVjdDp3cml0ZSJdfQ.SRbSSh_3OVXs-hHLVXgxflOOlLvt3s3n-9j4jnZWPKT_mSXcxKStxzh7wHHI-k1tV2buTF_FmfnnyX2TCxfmCBC3p3pPhJPWlfgUMa51pePSWeAbvNdXs-IPvJ6j_t55bhYHNXaCIhAVIniAbpWHFAQ7SmKLl4_paNOGCTXhcAzFVSjEz6vijQHxAc7hobCnEqVJXQoJMMrzswmsLoE2PKlFF8u-oTEki2_7DTvraOSsPGtAzdvMQr7R-sI0_qgG9QjW10GjKMqaSFQULSCYGYWV254r8sjQYCZ3CefOVAGzJWvvw1DsiXKBteDaDNupezGNm36TV6rf6FGBErCPMw",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"productId\": 1,\r\n  \"name\": \"product name C\",\r\n  \"weight\": 300,\r\n  \"recommendations\": [\r\n    {\r\n      \"recommendationId\": 1,\r\n      \"author\": \"author 1\",\r\n      \"rate\": 1,\r\n      \"content\": \"content 1\"\r\n    },\r\n    {\r\n      \"recommendationId\": 2,\r\n      \"author\": \"author 2\",\r\n      \"rate\": 2,\r\n      \"content\": \"content 2\"\r\n    },\r\n    {\r\n      \"recommendationId\": 3,\r\n      \"author\": \"author 3\",\r\n      \"rate\": 3,\r\n      \"content\": \"content 3\"\r\n    }\r\n  ],\r\n  \"reviews\": [\r\n    {\r\n      \"reviewId\": 1,\r\n      \"author\": \"author 1\",\r\n      \"subject\": \"subject 1\",\r\n      \"content\": \"content 1\"\r\n    },\r\n    {\r\n      \"reviewId\": 2,\r\n      \"author\": \"author 2\",\r\n      \"subject\": \"subject 2\",\r\n      \"content\": \"content 2\"\r\n    },\r\n    {\r\n      \"reviewId\": 3,\r\n      \"author\": \"author 3\",\r\n      \"subject\": \"subject 3\",\r\n      \"content\": \"content 3\"\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/product-composite/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"product-composite",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE https product composite",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtYWdudXMiLCJleHAiOjIyNDU4ODA4MTYsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiJySnhkZkFJYVU4U2gwM2hxanRxc2pLU1ZDQ3M9IiwiY2xpZW50X2lkIjoid3JpdGVyIiwic2NvcGUiOlsicHJvZHVjdDpyZWFkIiwicHJvZHVjdDp3cml0ZSJdfQ.SszQmcCHY0-_CnrNhBbfruzQxYwy3cO5K3AWINgXKw8FJOw2sjzRD0wDpRZFxm3JHcD44jQEzAVrGe_GCBZLWq37n6dGzy39PU5KOnPSqeoei7xbR1GC_Ss5RRyGM42kb9PCsbHZBdCSoU2OXV3YQMeHr-_P68ONQKhHT9RCAscWNh5sGELW7M4lVjx-wuDw_ItfuGBAUP-mJFj6uAfCJ87JqAQ9hH93FzAMWIf8gzacrz_JgutU7jUze-xLkOuXoVZgy1eYU3E7zVhZcdDXwNu9V5OoEcbJbDC2xYzN_4gi1xO5v8avrZtdDo1FoJ7Urm5RPfuJNxPvxO7I84fdew",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/product-composite/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"product-composite",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PASSWORD GRANT FLOW REQUEST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://writer:secret@localhost:8443/oauth/token?grant_type=password&password=password&username=magnus",
+					"protocol": "https",
+					"auth": {
+						"user": "writer",
+						"password": "secret"
+					},
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "password"
+						},
+						{
+							"key": "password",
+							"value": "password"
+						},
+						{
+							"key": "username",
+							"value": "magnus"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST https res4j product composite",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtYWdudXMiLCJleHAiOjIyNDYwMTEyNzEsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiJpY3FDS3RwaXZDdEdlZDZQQmdJT3pYS25oMzQ9IiwiY2xpZW50X2lkIjoid3JpdGVyIiwic2NvcGUiOlsicHJvZHVjdDpyZWFkIiwicHJvZHVjdDp3cml0ZSJdfQ.SRbSSh_3OVXs-hHLVXgxflOOlLvt3s3n-9j4jnZWPKT_mSXcxKStxzh7wHHI-k1tV2buTF_FmfnnyX2TCxfmCBC3p3pPhJPWlfgUMa51pePSWeAbvNdXs-IPvJ6j_t55bhYHNXaCIhAVIniAbpWHFAQ7SmKLl4_paNOGCTXhcAzFVSjEz6vijQHxAc7hobCnEqVJXQoJMMrzswmsLoE2PKlFF8u-oTEki2_7DTvraOSsPGtAzdvMQr7R-sI0_qgG9QjW10GjKMqaSFQULSCYGYWV254r8sjQYCZ3CefOVAGzJWvvw1DsiXKBteDaDNupezGNm36TV6rf6FGBErCPMw",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"productId\": 1,\r\n  \"name\": \"product name C\",\r\n  \"weight\": 300,\r\n  \"recommendations\": [\r\n    {\r\n      \"recommendationId\": 1,\r\n      \"author\": \"author 1\",\r\n      \"rate\": 1,\r\n      \"content\": \"content 1\"\r\n    },\r\n    {\r\n      \"recommendationId\": 2,\r\n      \"author\": \"author 2\",\r\n      \"rate\": 2,\r\n      \"content\": \"content 2\"\r\n    },\r\n    {\r\n      \"recommendationId\": 3,\r\n      \"author\": \"author 3\",\r\n      \"rate\": 3,\r\n      \"content\": \"content 3\"\r\n    }\r\n  ],\r\n  \"reviews\": [\r\n    {\r\n      \"reviewId\": 1,\r\n      \"author\": \"author 1\",\r\n      \"subject\": \"subject 1\",\r\n      \"content\": \"content 1\"\r\n    },\r\n    {\r\n      \"reviewId\": 2,\r\n      \"author\": \"author 2\",\r\n      \"subject\": \"subject 2\",\r\n      \"content\": \"content 2\"\r\n    },\r\n    {\r\n      \"reviewId\": 3,\r\n      \"author\": \"author 3\",\r\n      \"subject\": \"subject 3\",\r\n      \"content\": \"content 3\"\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/product-composite",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"product-composite"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET https res4j product-composite",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtYWdudXMiLCJleHAiOjIyNDYwMTEyNzEsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiJpY3FDS3RwaXZDdEdlZDZQQmdJT3pYS25oMzQ9IiwiY2xpZW50X2lkIjoid3JpdGVyIiwic2NvcGUiOlsicHJvZHVjdDpyZWFkIiwicHJvZHVjdDp3cml0ZSJdfQ.SRbSSh_3OVXs-hHLVXgxflOOlLvt3s3n-9j4jnZWPKT_mSXcxKStxzh7wHHI-k1tV2buTF_FmfnnyX2TCxfmCBC3p3pPhJPWlfgUMa51pePSWeAbvNdXs-IPvJ6j_t55bhYHNXaCIhAVIniAbpWHFAQ7SmKLl4_paNOGCTXhcAzFVSjEz6vijQHxAc7hobCnEqVJXQoJMMrzswmsLoE2PKlFF8u-oTEki2_7DTvraOSsPGtAzdvMQr7R-sI0_qgG9QjW10GjKMqaSFQULSCYGYWV254r8sjQYCZ3CefOVAGzJWvvw1DsiXKBteDaDNupezGNm36TV6rf6FGBErCPMw",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"productId\": 1,\r\n  \"name\": \"product name C\",\r\n  \"weight\": 300,\r\n  \"recommendations\": [\r\n    {\r\n      \"recommendationId\": 1,\r\n      \"author\": \"author 1\",\r\n      \"rate\": 1,\r\n      \"content\": \"content 1\"\r\n    },\r\n    {\r\n      \"recommendationId\": 2,\r\n      \"author\": \"author 2\",\r\n      \"rate\": 2,\r\n      \"content\": \"content 2\"\r\n    },\r\n    {\r\n      \"recommendationId\": 3,\r\n      \"author\": \"author 3\",\r\n      \"rate\": 3,\r\n      \"content\": \"content 3\"\r\n    }\r\n  ],\r\n  \"reviews\": [\r\n    {\r\n      \"reviewId\": 1,\r\n      \"author\": \"author 1\",\r\n      \"subject\": \"subject 1\",\r\n      \"content\": \"content 1\"\r\n    },\r\n    {\r\n      \"reviewId\": 2,\r\n      \"author\": \"author 2\",\r\n      \"subject\": \"subject 2\",\r\n      \"content\": \"content 2\"\r\n    },\r\n    {\r\n      \"reviewId\": 3,\r\n      \"author\": \"author 3\",\r\n      \"subject\": \"subject 3\",\r\n      \"content\": \"content 3\"\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/product-composite/1?delay=0&faultPercent=0",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"product-composite",
+						"1"
+					],
+					"query": [
+						{
+							"key": "delay",
+							"value": "0"
+						},
+						{
+							"key": "faultPercent",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
