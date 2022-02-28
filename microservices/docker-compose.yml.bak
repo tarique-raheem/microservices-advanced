@@ -59,7 +59,7 @@ services:
       - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
     depends_on:
       config-server:
-        condition: service_started
+        condition: none
     build: eureka-server
     mem_limit: 350m
 
@@ -70,7 +70,7 @@ services:
       - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
     depends_on:
       eureka:
-        condition: service_started
+        condition: none
     build: gateway
     mem_limit: 350m
     ports:
@@ -83,7 +83,7 @@ services:
       - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
     depends_on:
       eureka:
-        condition: service_started     
+        condition: none     
     build: authorization-server
     mem_limit: 350m
 

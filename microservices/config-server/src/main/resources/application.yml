@@ -12,5 +12,5 @@ logging:
 
 ---
 spring.profiles: docker
-spring.cloud.config.server.native.searchLocations: file:/config-repo
+spring.cloud.config.server.native.searchLocations: classpath:config-repo
 
