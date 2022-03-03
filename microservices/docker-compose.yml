@@ -3,6 +3,7 @@ version: '2.1'
 services:
   product:
     build: product-service
+    image: hands-on/product-service
     mem_limit: 350m
     networks:
       - my-network
@@ -19,6 +20,7 @@ services:
 
   recommendation:
     build: recommendation-service
+    image: hands-on/recommendation-service
     mem_limit: 350m
     networks:
       - my-network
@@ -34,6 +36,7 @@ services:
 
   review:
     build: review-service
+    image: hands-on/review-service
     mem_limit: 350m
     networks:
       - my-network
@@ -49,6 +52,7 @@ services:
 
   product-composite:
     build: product-composite-service
+    image: hands-on/product-composite-service
     mem_limit: 350m
     networks:
       - my-network
@@ -60,21 +64,9 @@ services:
       rabbitmq:
         condition: service_healthy
 
-  eureka:
-    build: eureka-server
-    mem_limit: 350m
-    networks:
-      - my-network
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
-      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
-    depends_on:
-      config-server:
-        condition: service_started
-
   gateway:
     build: gateway
+    image: hands-on/gateway
     mem_limit: 350m
     ports:
       - "8443:8443"
@@ -84,11 +76,10 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
       - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
-    depends_on:
-      eureka:
-        condition: service_started
+
   auth-server:
     build: authorization-server
+    image: hands-on/auth-server
     mem_limit: 350m
     networks:
       - my-network
@@ -99,6 +90,7 @@ services:
 
   config-server:
     build: config-server
+    image: hands-on/config-server
     mem_limit: 350m
     networks:
       - my-network
