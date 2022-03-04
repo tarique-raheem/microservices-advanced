@@ -14,27 +14,14 @@ spec:
     http:
       paths:
       - path: /oauth
-        pathType: Prefix
         backend:
-          service:
-            name: auth-server
-            port:
-              number: 80
-
-
+          serviceName: auth-server
+          servicePort: 80
       - path: /product-composite
-        pathType: Prefix
         backend:
-          service:
-            name: product-composite
-            port:
-              number: 80
-
-
+          serviceName: product-composite
+          servicePort: 80        
       - path: /actuator/health
-        pathType: Prefix
         backend:
-          service:
-            name: product-composite
-            port:
-              number: 80
+          serviceName: product-composite
+          servicePort: 80

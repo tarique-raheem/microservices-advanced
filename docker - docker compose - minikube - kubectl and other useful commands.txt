@@ -1,0 +1,489 @@
+To access ubuntu file sytem from windows explorer
+in the address bar typr \\wsl$
+
+# to make eclipse pick up the gradle dependencies
+### apply plugin: 'eclipse' should be added to build.gradle file
+gradlew cleanEclipse eclipse
+
+Step # 01 create docker file
+Step # 02place the docker file and the fat jar file relative to docker file as below
+./build/libs/
+Step # 03 build docker image by running the command in the directory where the docker file is placed
+docker build -t transaction-history
+docker build -t transaction-history ./ Dockerfile
+Step # 04 start the service as container
+docker run --rm -p8080:8080 -e "SPRING_PROFILES_ACTIVE=docker" product-service
+
+# start docker client
+Start-Service docker
+
+# check all the images stored
+docker images
+# check all the containers (all states)
+docker ps
+# build docker image 
+docker build -t transaction-history ./ -f Dockerfile
+# start microservice as container 
+docker run -d -p:8080:8080 -e "SPRING_PROFILES_ACTIVE=docker" --name con-transaction-history transaction-history
+# check logs
+docker logs con-transaction-history -f
+# force stop and remove the container
+docker rm -f con-transaction-history
+# stop docker container
+docker stop con-transaction-history
+# remove container (if stopped)
+docker rm con-transaction-history
+# starting a docker container
+docker start con-transaction-history
+# remove all unused volumes - this command should be executed as volumnes are created by docker and they become useless later.
+# I ran this command on 28th of feb 2022 and reclaimed 13.5 GB of space
+docker volume prune
+# list all the volumes
+docker volume ls
+# remove all unused images
+docker image prune -a
+# Remove all stopped containers
+docker container prune
+
+--------------------------------------------------------------------------------------
+		MINIKUBE COMMANDS - COMMANDS TO CREATE, MANAGE, START AND STOP THE CLUSTER
+--------------------------------------------------------------------------------------
+# creating and starting minikube cluster based upon hyperv as vm driver and latest kubernetes stable version as of Feb 2022 i.e. v1.22.6
+# the minikube (Kubernetes) single node cluster will be based upon the docker installed on your machine (default docker: added to the path environment variable)
+
+# you can run command docker version to check which version of docker is installed on your machine and set in path variable
+# once kubernetes cluster is created by below command you will see the exactly same version number in the information printed while creating cluster. e.g "Preparing Kubernetes v1.22.6 on Docker 20.10.12 ..."
+minikube start -p handson-spring-boot-cloud \ --memory=10240 \ --cpus=4 \ --disk-size=30g \ --kubernetes-version=v1.22.6 \ --vm-driver=hyperv minikube
+
+### get the list of profiles 
+minikube profile list
+
+|---------------------------|-----------|---------|----------------|------|---------|---------|-------|
+|          Profile          | VM Driver | Runtime |       IP       | Port | Version | Status  | Nodes |
+|---------------------------|-----------|---------|----------------|------|---------|---------|-------|
+| handson-spring-boot-cloud | hyperv    | docker  | 172.23.102.109 | 8443 | v1.22.6 | Stopped |     1 |
+|---------------------------|-----------|---------|----------------|------|---------|---------|-------|
+
+
+# delete all the profiles
+minikube delete --all
+
+
+# Enable addon ingress  
+minikube addons enable ingress -p handson-spring-boot-cloud
+
+# Enable addon metrics-server
+minikube addons enable metrics-server -p handson-spring-boot-cloud
+
+# the list of addons for current profile (see ingress and metrics-server are there in the list now)
+minikube addons list
+|-----------------------------|---------------------------|--------------|--------------------------------|
+|         ADDON NAME          |          PROFILE          |    STATUS    |           MAINTAINER           |
+|-----------------------------|---------------------------|--------------|--------------------------------|
+| ambassador                  | handson-spring-boot-cloud | disabled     | third-party (ambassador)       |
+| auto-pause                  | handson-spring-boot-cloud | disabled     | google                         |
+| csi-hostpath-driver         | handson-spring-boot-cloud | disabled     | kubernetes                     |
+| dashboard                   | handson-spring-boot-cloud | disabled     | kubernetes                     |
+| default-storageclass        | handson-spring-boot-cloud | enabled ✅   | kubernetes                     |
+| efk                         | handson-spring-boot-cloud | disabled     | third-party (elastic)          |
+| freshpod                    | handson-spring-boot-cloud | disabled     | google                         |
+| gcp-auth                    | handson-spring-boot-cloud | disabled     | google                         |
+| gvisor                      | handson-spring-boot-cloud | disabled     | google                         |
+| helm-tiller                 | handson-spring-boot-cloud | disabled     | third-party (helm)             |
+| ingress                     | handson-spring-boot-cloud | enabled ✅   | unknown (third-party)          |
+| ingress-dns                 | handson-spring-boot-cloud | disabled     | google                         |
+| istio                       | handson-spring-boot-cloud | disabled     | third-party (istio)            |
+| istio-provisioner           | handson-spring-boot-cloud | disabled     | third-party (istio)            |
+| kong                        | handson-spring-boot-cloud | disabled     | third-party (Kong HQ)          |
+| kubevirt                    | handson-spring-boot-cloud | disabled     | third-party (kubevirt)         |
+| logviewer                   | handson-spring-boot-cloud | disabled     | unknown (third-party)          |
+| metallb                     | handson-spring-boot-cloud | disabled     | third-party (metallb)          |
+| metrics-server              | handson-spring-boot-cloud | enabled ✅   | kubernetes                     |
+| nvidia-driver-installer     | handson-spring-boot-cloud | disabled     | google                         |
+| nvidia-gpu-device-plugin    | handson-spring-boot-cloud | disabled     | third-party (nvidia)           |
+| olm                         | handson-spring-boot-cloud | disabled     | third-party (operator          |
+|                             |                           |              | framework)                     |
+| pod-security-policy         | handson-spring-boot-cloud | disabled     | unknown (third-party)          |
+| portainer                   | handson-spring-boot-cloud | disabled     | portainer.io                   |
+| registry                    | handson-spring-boot-cloud | disabled     | google                         |
+| registry-aliases            | handson-spring-boot-cloud | disabled     | unknown (third-party)          |
+| registry-creds              | handson-spring-boot-cloud | disabled     | third-party (upmc enterprises) |
+| storage-provisioner         | handson-spring-boot-cloud | enabled ✅   | google                         |
+| storage-provisioner-gluster | handson-spring-boot-cloud | disabled     | unknown (third-party)          |
+| volumesnapshots             | handson-spring-boot-cloud | disabled     | kubernetes                     |
+|-----------------------------|---------------------------|--------------|--------------------------------|
+
+
+
+
+# get list of nodes on kubectl cluster
+kubectl get nodes
+
+
+# get list of system pods created in kube-system namespace
+kubectl get pods --namespace=kube-system
+
+NAME                                                READY   STATUS    RESTARTS   AGE
+coredns-78fcd69978-t4mw9                            1/1     Running   0          30m
+etcd-handson-spring-boot-cloud                      1/1     Running   0          30m
+kube-apiserver-handson-spring-boot-cloud            1/1     Running   0          30m
+kube-controller-manager-handson-spring-boot-cloud   1/1     Running   0          30m
+kube-proxy-8dzn2                                    1/1     Running   0          30m
+kube-scheduler-handson-spring-boot-cloud            1/1     Running   0          30m
+metrics-server-77c99ccb96-tbc74                     1/1     Running   0          12m
+storage-provisioner                                 1/1     Running   0          30m
+
+
+# stoping (not deleting) the cluster
+minikube stop -p handson-spring-boot-cloud
+# starting an existing cluster (just specify start command with name of profile)
+# it will start the same profile which was created above i.e. kubernetes v1.16.1 with driver hyperv memory 10240
+minikube start -p handson-spring-boot-cloud
+# setting a particular profile to avoid putting -p in every command
+# the default profile set is "minikube" even after you have created a profile through run command as specified above
+# the newly created profile should be explicitly set
+minikube profile handson-spring-boot-cloud
+* minikube profile was successfully set to handson-spring-boot-cloud
+# inquire current profile - command 1
+minikube profile
+* handson-spring-boot-cloud
+# inquire current profile - command 2
+minikube config get profile
+handson-spring-boot-cloud
+
+
+=========================================
+# starting an existing cluster
+=========================================
+### check current profile to make sure you are in right profile and starting the right cluster
+minikube profile
+* handson-spring-boot-cloud
+
+OR
+
+minikube config get profile
+handson-spring-boot-cloud
+
+### set the correct profile before starting current profile (**** IF NEEDED *****)
+minikube profile handson-spring-boot-cloud
+* minikube profile was successfully set to handson-spring-boot-cloud
+
+### starting the cluster
+
+minikube start
+* [handson-spring-boot-cloud] minikube v1.25.2 on Microsoft Windows 10 Pro 10.0.19042 Build 19042
+* Kubernetes 1.23.3 is now available. If you would like to upgrade, specify: --kubernetes-version=v1.23.3
+* Using the hyperv driver based on existing profile
+* Starting control plane node handson-spring-boot-cloud in cluster handson-spring-boot-cloud
+* Restarting existing hyperv VM for "handson-spring-boot-cloud" ...
+* Preparing Kubernetes v1.22.6 on Docker 20.10.12 ...
+  - kubelet.housekeeping-interval=5m
+* Verifying Kubernetes components...
+  - Using image k8s.gcr.io/metrics-server/metrics-server:v0.4.2
+  - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+  - Using image k8s.gcr.io/ingress-nginx/controller:v1.1.1
+  - Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+  - Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+* Verifying ingress addon...
+* Enabled addons: storage-provisioner, metrics-server, default-storageclass, ingress
+* Done! kubectl is now configured to use "handson-spring-boot-cloud" cluster and "default" namespace by default
+
+
+### Stopping the cluster in current profile
+minikube stop
+* Stopping node "handson-spring-boot-cloud"  ...
+* Powering off "handson-spring-boot-cloud" via SSH ...
+* 1 node stopped.
+
+### get the list of nodes created in current context (cluster and namespace). 
+### Cluster and namespace are created within the profile specified at the beginning while starting the cluster
+
+kubectl get nodes
+
+NAME                        STATUS   ROLES                  AGE   VERSION
+handson-spring-boot-cloud   Ready    control-plane,master   45m   v1.22.6
+
+### get the list of pods running in current context (cluster and namespace)
+### wonder why did you get below response? Because you have just created the cluster and haven't scheduled any pod yet
+### you can re run the same command after scheduling pods (doing deployments of services and apps)
+kubectl get pods
+No resources found in default namespace.
+
+
+### get the system pods created in namespace kube-system
+kubectl get pods --namespace=kube-system
+NAME                                                READY   STATUS    RESTARTS        AGE
+coredns-78fcd69978-t4mw9                            1/1     Running   1 (15m ago)     48m
+etcd-handson-spring-boot-cloud                      1/1     Running   0               6m31s
+kube-apiserver-handson-spring-boot-cloud            1/1     Running   0               6m31s
+kube-controller-manager-handson-spring-boot-cloud   1/1     Running   1 (15m ago)     49m
+kube-proxy-8dzn2                                    1/1     Running   1 (15m ago)     48m
+kube-scheduler-handson-spring-boot-cloud            1/1     Running   1 (15m ago)     49m
+metrics-server-77c99ccb96-tbc74                     1/1     Running   1 (15m ago)     31m
+storage-provisioner                                 1/1     Running   2 (5m51s ago)   48m
+
+
+
+--------------------------------------------------------
+			DOCKER COMPOSE COMMANDS
+--------------------------------------------------------
+#building a set of services with docker-compose
+docker-compose build
+# starting the containers landspace
+docker-compose up -d
+# checking the logs
+docker-compose logs -f
+# logs of specific container
+docker-compose logs -f con-transaction-history
+# check the running containers
+docker-compose ps
+
+
+---------------------------------------------------------------------------------
+					KUBECTL COMMANDS
+---------------------------------------------------------------------------------
+## update the pod using latest image after ( i. doing code changes ii. building the image)
+kubectl rollout restart deploy product
+
+
+## Configure environment to use minikube’s Docker daemon
+C:\Users\tariqueraheem>minikube docker-env
+SET DOCKER_TLS_VERIFY=1
+SET DOCKER_HOST=tcp://172.29.149.179:2376
+SET DOCKER_CERT_PATH=C:\Users\tariqueraheem\.minikube\certs
+SET MINIKUBE_ACTIVE_DOCKERD=handson-spring-boot-cloud
+REM To point your shell to minikube's docker-daemon, run:
+REM @FOR /f "tokens=*" %i IN ('minikube -p handson-spring-boot-cloud docker-env --shell cmd') DO @%i
+
+## In power shell
+& minikube -p handson-spring-boot-cloud docker-env --shell powershell | Invoke-Expression
+
+## Verify it docker daemon used is of minikube
+
+PS C:\Windows\system32> $Env:MINIKUBE_ACTIVE_DOCKERD
+handson-spring-boot-cloud
+
+## get list of images of docker daemon
+
+C:\Users\tariqueraheem>minikube image list
+k8s.gcr.io/pause:3.5
+k8s.gcr.io/metrics-server/metrics-server:<none>
+k8s.gcr.io/kube-scheduler:v1.22.6
+k8s.gcr.io/kube-proxy:v1.22.6
+k8s.gcr.io/kube-controller-manager:v1.22.6
+k8s.gcr.io/kube-apiserver:v1.22.6
+k8s.gcr.io/ingress-nginx/kube-webhook-certgen:<none>
+k8s.gcr.io/ingress-nginx/controller:<none>
+k8s.gcr.io/etcd:3.5.0-0
+k8s.gcr.io/coredns/coredns:v1.8.4
+gcr.io/k8s-minikube/storage-provisioner:v5
+docker.io/kubernetesui/metrics-scraper:v1.0.7
+docker.io/kubernetesui/dashboard:v2.3.1
+
+## get list of images (Command # 02)
+kubectl get pods -o json | jq .items[].spec.containers[].image
+
+## create namespace
+kubectl create namespace hands-on
+
+## Set currrent / default workspace
+kubectl config set-context --current --namespace=hands-on
+
+
+## Check currrent / default workspace
+kubectl config view --minify
+
+C:\Users\tariqueraheem>kubectl config view --minify
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: C:\Users\tariqueraheem\.minikube\ca.crt
+    extensions:
+    - extension:
+        last-update: Thu, 03 Mar 2022 11:16:12 GMT
+        provider: minikube.sigs.k8s.io
+        version: v1.25.2
+      name: cluster_info
+    server: https://172.19.157.229:8443
+  name: handson-spring-boot-cloud
+contexts:
+- context:
+    cluster: handson-spring-boot-cloud
+    extensions:
+    - extension:
+        last-update: Thu, 03 Mar 2022 11:16:12 GMT
+        provider: minikube.sigs.k8s.io
+        version: v1.25.2
+      name: context_info
+    namespace: hands-on
+    user: handson-spring-boot-cloud
+  name: handson-spring-boot-cloud
+current-context: handson-spring-boot-cloud
+kind: Config
+preferences: {}
+users:
+- name: handson-spring-boot-cloud
+  user:
+    client-certificate: C:\Users\tariqueraheem\.minikube\profiles\handson-spring-boot-cloud\client.crt
+    client-key: C:\Users\tariqueraheem\.minikube\profiles\handson-spring-boot-cloud\client.key
+
+
+## create configmap based upon the file system folder
+kubectl create configmap config-repo --from-file=config-repo/ --save-config
+
+
+C:\work\bk\ch16\git\microservices>kubectl describe configmaps config-repo
+Name:         config-repo
+Namespace:    hands-on
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+review.yml:
+----
+server.port: 7003
+server.error.include-message: always
+
+# Strongly recommend to set this property to "none" in a production environment!
+spring.jpa.hibernate.ddl-auto: update
+<<<<<<<<<<<<<< Lines removed for the sake of clarity. This commands prints all the properties from all the files>>>>>>>>
+
+
+## create secret for config server
+kubectl create secret generic config-server-secrets --from-literal=ENCRYPT_KEY=my-very-secure-encrypt-key --from-literal=SPRING_SECURITY_USER_NAME=dev-usr --from-literal=SPRING_SECURITY_USER_PASSWORD=dev-pwd --save-config
+
+## verifying secret
+C:\work\bk\ch16\git\microservices>kubectl get secret config-server-secrets
+NAME                    TYPE     DATA   AGE
+config-server-secrets   Opaque   3      47s
+
+## create secret for client
+kubectl create secret generic config-client-credentials --from-literal=CONFIG_SERVER_USR=dev-usr  --from-literal=CONFIG_SERVER_PWD=dev-pwd --save-config
+
+C:\work\bk\ch16\git\microservices>kubectl get secret config-client-credentials
+NAME                        TYPE     DATA   AGE
+config-client-credentials   Opaque   2      30s
+
+## pull docker images for mysql, mongo, rabbitmq and openzipkin
+docker pull mysql:5.7
+docker pull mongo:3.6.9
+docker pull rabbitmq:3.7.8-management
+docker pull openzipkin/zipkin:2.12.9
+
+## deploy the microservice using Kustomize and dev overlay
+kubectl apply -k kubernetes/services/overlays/dev
+
+## Wait for deployments and their pods to be up and running
+kubectl wait --timeout=600s --for=condition=ready pod --all
+
+
+## delete workspace to delete all the resources within that workspace in one go
+kubectl delete namespace hands-on
+
+
+---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+kubectl create configmap config-repo-auth-server       --from-file=config-repo/application.yml --from-file=config-repo/auth-server.yml --save-config
+
+kubectl create configmap config-repo-gateway           --from-file=config-repo/application.yml --from-file=config-repo/gateway.yml --save-config
+
+
+kubectl create configmap config-repo-product-composite --from-file=config-repo/application.yml --from-file=config-repo/product-composite.yml --save-config
+
+
+kubectl create configmap config-repo-product           --from-file=config-repo/application.yml --from-file=config-repo/product.yml --save-config
+
+
+kubectl create configmap config-repo-recommendation    --from-file=config-repo/application.yml --from-file=config-repo/recommendation.yml --save-config
+
+
+kubectl create configmap config-repo-review            --from-file=config-repo/application.yml --from-file=config-repo/review.yml --save-config
+
+kubectl create secret generic rabbitmq-server-credentials --from-literal=RABBITMQ_DEFAULT_USER=rabbit-user-dev --from-literal=RABBITMQ_DEFAULT_PASS=rabbit-pwd-dev --save-config
+
+kubectl create secret generic rabbitmq-credentials --from-literal=SPRING_RABBITMQ_USERNAME=rabbit-user-dev --from-literal=SPRING_RABBITMQ_PASSWORD=rabbit-pwd-dev --save-config
+
+kubectl create secret generic rabbitmq-zipkin-credentials --from-literal=RABBIT_USER=rabbit-user-dev --from-literal=RABBIT_PASSWORD=rabbit-pwd-dev --save-config
+
+kubectl create secret generic mongodb-server-credentials --from-literal=MONGO_INITDB_ROOT_USERNAME=mongodb-user-dev --from-literal=MONGO_INITDB_ROOT_PASSWORD=mongodb-pwd-dev --save-config
+
+kubectl create secret generic mongodb-credentials --from-literal=SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE=admin --from-literal=SPRING_DATA_MONGODB_USERNAME=mongodb-user-dev --from-literal=SPRING_DATA_MONGODB_PASSWORD=mongodb-pwd-dev --save-config
+
+
+
+kubectl create secret generic mysql-server-credentials --from-literal=MYSQL_ROOT_PASSWORD=rootpwd --from-literal=MYSQL_DATABASE=review-db --from-literal=MYSQL_USER=mysql-user-dev --from-literal=MYSQL_PASSWORD=mysql-pwd-dev --save-config
+
+kubectl create secret generic mysql-credentials --from-literal=SPRING_DATASOURCE_USERNAME=mysql-user-dev --from-literal=SPRING_DATASOURCE_PASSWORD=mysql-pwd-dev --save-config
+
+kubectl create secret tls tls-certificate --key kubernetes/cert/tls.key --cert kubernetes/cert/tls.crt
+
+# First deploy the resource managers and wait for their pods to become ready
+kubectl apply -f kubernetes/services/overlays/dev/rabbitmq-dev.yml
+kubectl apply -f kubernetes/services/overlays/dev/mongodb-dev.yml
+kubectl apply -f kubernetes/services/overlays/dev/mysql-dev.yml
+kubectl wait --timeout=600s --for=condition=ready pod --all
+
+# Next deploy the microservices and wait for their pods to become ready
+kubectl apply -k kubernetes/services/overlays/dev
+kubectl wait --timeout=600s --for=condition=ready pod --all
+
+
+
+
+## Query Ingress to make sure it is created
+PS C:\work\bk\ch17\git> kubectl get ingress edge
+NAME   CLASS   HOSTS         ADDRESS          PORTS     AGE
+edge   nginx   minikubeme   172.28.189.110   80, 443   12m
+
+
+## Deploy cert manager
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.7.1/cert-manager.yaml
+
+## confirm that pods are up and running
+PS C:\work\bk\ch17\git> kubectl wait --timeout=600s --for=condition=ready pod --all -n cert-manager
+pod/cert-manager-6d8d6b5dbb-wvxmv condition met
+pod/cert-manager-cainjector-d6cbc4d9-lgq9l condition met
+pod/cert-manager-webhook-85fb68c79b-zfp24 condition met
+
+
+## Save authorization token in ngrok configuration file
+## you will have to signup first on https://dashboard.ngrok.com/signup and then pick up token from https://dashboard.ngrok.com/get-started/your-authtoken which is passed in the below command
+PS C:\work\bk\ch17\git> ngrok authtoken 25uonS0f1ru7bkOKxobmTsSIDow_5VNndvGuUx5qyCFdvEoqG
+Authtoken saved to configuration file: C:\Users\tariqueraheem/.ngrok2/ngrok.yml
+
+## create a tunnel
+## you will get error if you have not verified the email
+PS C:\work\bk\ch17\git> ngrok http https://minikubeme:443
+The account "Tarique Raheem" may not start an ngrok agent session until the admin's email address is verified. Verify your email at https://dashboard.ngrok.com/user/settings
+
+ERR_NGROK_123
+
+
+----------------------------------------------------------------------------------
+AFTER EVERYTHING IS SETUP ONCE, ONLY BELOW COMMANDS NEED TO BE RUN
+----------------------------------------------------------------------------------
+## check if minikube IP has changed after restart
+1) minikube ip
+
+2) If minikube IP has changed then update in C:\Windows\System32\drivers\etc host file
+
+3) minikube start
+
+## to make sure that the desired profile is set as current profile
+4) minikube profile
+
+## change namespace to desired namespace e.g. hands-on
+kubectl config set-context --current --namespace=hands-on
+
+
+## Check currrent / default workspace
+kubectl config view --minify
+
+## verify if all the pods are running
+kubectl get pods
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+Now you can test the services
+%%%%%%%%%%%%%%%%%%%%%%
