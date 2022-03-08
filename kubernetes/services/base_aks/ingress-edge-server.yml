@@ -2,13 +2,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: edge
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
-  tls:
-    - hosts:
-      - minikubeme
-      secretName: tls-certificate
   rules:
-    http:
+  - http:
       paths:
       - path: /oauth
         pathType: Prefix
@@ -17,8 +18,6 @@ spec:
             name: auth-server
             port:
               number: 80
-
-
       - path: /product-composite
         pathType: Prefix
         backend:
@@ -26,8 +25,6 @@ spec:
             name: product-composite
             port:
               number: 80
-
-
       - path: /actuator/health
         pathType: Prefix
         backend:
