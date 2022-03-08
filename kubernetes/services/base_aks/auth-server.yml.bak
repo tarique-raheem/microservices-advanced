@@ -15,7 +15,7 @@ spec:
       containers:
       - name: auth-server
         image: mise2022.azurecr.io/hands-on/auth-server:latest
-        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "docker"

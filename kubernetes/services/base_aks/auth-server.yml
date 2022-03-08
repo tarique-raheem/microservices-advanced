@@ -62,6 +62,7 @@ kind: Service
 metadata:
   name: auth-server
 spec:
+#  type: LoadBalancer
   selector:
     app: auth-server
   ports:
