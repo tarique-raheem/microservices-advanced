@@ -63,6 +63,7 @@ metadata:
   name: product-composite
 spec:
 #  type: LoadBalancer
+   type: ClusterIP
   selector:
     app: product-composite
   ports:
